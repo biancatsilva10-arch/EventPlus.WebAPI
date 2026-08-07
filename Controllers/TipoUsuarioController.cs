@@ -1,0 +1,19 @@
+﻿using EventPlus.WebAPI.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EventPlus.WebAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TipoUsuarioController : ControllerBase
+    {
+        private readonly ITipoUsuario _tipoUsuario;
+        public TipoUsuarioController(TipoUsuarioController tipoUsuario)
+        {
+            _tipoUsuario = tipoUsuario;
+        }
+
+       
+    }
+}
