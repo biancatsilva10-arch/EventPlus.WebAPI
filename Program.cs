@@ -13,9 +13,13 @@ builder.Services.AddDbContext<EventContext>(options => options.UseSqlServer(buil
 //Isso garante que cada requisição teha seu proprio contexto isolado
 
 builder.Services.AddScoped<ITipoUsuario, TipoUsuarioRepository>();
+//Registrar o serviço de controllers (mapeia automaticamente os controllers da pasta / controllers)
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapControllers();
+//Mapeia as rotas definidas nos Controllers com os atributos [Route]: api/[controller]
 
 app.Run();

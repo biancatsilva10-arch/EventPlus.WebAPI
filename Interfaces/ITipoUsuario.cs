@@ -10,9 +10,9 @@ namespace EventPlus.WebAPI.Interfaces
 
         Task Atualizar(Guid id, TipoUsuario tipoUsuario);
 
-        Task Deletar(Guild id);
+        Task Deletar(Guid id);
 
-        Task<TipoUsuario> BuscarPorId(Guild id);
+        Task<TipoUsuario?> BuscarPorId(Guid id);
   
     }
 }
