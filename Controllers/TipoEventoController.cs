@@ -1,12 +1,12 @@
 ﻿using EventPlus.WebAPI.DTO;
 using EventPlus.WebAPI.Interfaces;
-using EventPlus.WebAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace EventPlus.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] //http://localhost:7098/api/TipoEvento 
     [ApiController]
     public class TipoEventoController : ControllerBase
     {
@@ -15,51 +15,53 @@ namespace EventPlus.WebAPI.Controllers
         {
             _tipoEvento = tipoEvento;
         }
-  
+
+        [HttpPost]
+        public async Task<IActionResult> Cadastrar(TipoEventoDTO dto)
+        {
+            try
+            {
+                var tipoEvento = new TipoEventoDTO
+                {
+                    TituloTipoEvento = dto.TituloTipoEvento
+                };
+
+                await _tipoEvento.Cadastrar(tipoEvento);
+                return StatusCode(201, tipoEvento);
+
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+      
+
+
+        }
+
+
+
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
             try
             {
+                //o que esperamos que de certo
+
                 var tipos = await _tipoEvento.Listar();
-
                 return Ok(tipos);
+
+
             }
-            catch (Exception erro)
+            catch (Exception e)
             {
-                return BadRequest(erro.Message);
+                return BadRequest(e.Message);
+                //se der errado, não vai quebrar nosso codigo, vai ter um tratamento de erro
+                throw;
             }
+
         }
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> BuscarPorId(Guid id)
-        {
-            var tipoEventoBuscado = await
-                _tipoEvento.BuscarPorId(id);
-            if (tipoEventoBuscado == null)
-            {
-                return NotFound("Tipo de evento não encontrado");
-            }
-            return Ok(tipoEventoBuscado);
-            {
-
-            }
-        }
-        [HttpPost]
-        public async Task<IActionResult> Cadastrar([FromBody] TipoEventoDTO dto)
-        {
-            var tipoEvento = new TipoEvento
-            {
-                TituloTipoEvento = dto.Titulo
-            };
-
-            await _tipoEvento.Cadastrar(tipoEvento);
-
-            return StatusCode(201, tipoEvento);
-            {
-
-            }
-
-
-
-
-       
+    }
+}

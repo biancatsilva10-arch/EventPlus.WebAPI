@@ -5,41 +5,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventPlus.WebAPI.Repositories
 {
-    public class TipoEventoRepository : ITipoEvento
+    public class InstituicaoRepository : IInstituicao
     {
         private readonly EventContext _context;
-
-        public TipoEventoRepository(EventContext context)
+        public InstituicaoRepository(EventContext context)
         {
             _context = context;
         }
 
-        public Task Atualizar(Guid id, TipoEvento tipoEvento)
+
+        public Task Atualizar(Guid id, Instituicao instituicao)
         {
             throw new NotImplementedException();
         }
 
-        public async Task Cadastrar(TipoEvento tipoEvento)
+        public async Task Cadastrar(Instituicao instituicao)
         {
-           await _context.TipoEvento.AddAsync(tipoEvento);
-           await _context.SaveChangesAsync();
+            await _context.Instituicao.AddAsync(instituicao);
+            await _context.SaveChangesAsync();
 
         }
 
-        public async Task Deletar(TipoEvento tipoEvento)
+        public async Task Deletar(Instituicao instituicao)
         {
             throw new NotImplementedException();
         }
 
-        Task<TipoEvento?> ITipoEvento.BuscarPorId(Guid id)
+        Task<Instituicao?> IInstituicao.BuscarPorId(Guid id)
         {
             throw new NotImplementedException();
         }
 
-     
-        Task<List<TipoEvento>> ITipoEvento.Listar()
+
+        Task<List<Instituicao>> IInstituicao.Listar()
         {
-            return _context.TipoEvento.AsNoTracking().ToListAsync();
+            return _context.Instituicao.AsNoTracking().ToListAsync();
         }
 
         public Task Deletar(Guid id)
@@ -47,9 +47,18 @@ namespace EventPlus.WebAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Cadastrar(object tipoEvento)
+        public Task Cadastrar(object instituicao)
         {
             throw new NotImplementedException();
         }
+
+
+
+
+
+
+
+
+
     }
 }
