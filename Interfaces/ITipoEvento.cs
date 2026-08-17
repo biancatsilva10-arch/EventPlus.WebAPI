@@ -19,6 +19,6 @@ namespace EventPlus.WebAPI.Interfaces
         Task<List<TipoEvento>> Listar();
 
         Task<TipoEvento?> BuscarPorId(Guid id);
-        Task Cadastrar(object tipoEvento);
+       
     }
 }

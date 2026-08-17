@@ -13,10 +13,19 @@ namespace EventPlus.WebAPI.Repositories
         {
             _context = context;
         }
-
-        public Task Atualizar(Guid id, TipoEvento tipoEvento)
+        //  guid id : id do objeto buscado
+        // tipoEvento novotipo : objeto com as novas informações 
+        // tipoEveto : classe 
+        // novoTipo: objeto de classe
+        //tituloTipoEvento = propriedade do obejto
+        public async Task Atualizar(Guid id, TipoEvento novoTipo)
         {
-            throw new NotImplementedException();
+           var tipoBuscado = await _context.TipoEvento.FindAsync(id);
+            if (tipoBuscado != null)
+            {
+                tipoBuscado.TituloTipoEvento = novoTipo.TituloTipoEvento;
+            }
+           await _context.SaveChangesAsync();
         }
 
         public async Task Cadastrar(TipoEvento tipoEvento)
@@ -26,30 +35,31 @@ namespace EventPlus.WebAPI.Repositories
 
         }
 
-        public async Task Deletar(TipoEvento tipoEvento)
+       
+       public async Task<TipoEvento?> BuscarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.TipoEvento.FirstOrDefaultAsync(t => t.IdTipoEvento == id);
         }
 
-        Task<TipoEvento?> ITipoEvento.BuscarPorId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
 
-     
         Task<List<TipoEvento>> ITipoEvento.Listar()
         {
             return _context.TipoEvento.AsNoTracking().ToListAsync();
         }
 
-        public Task Deletar(Guid id)
+        public async Task Deletar(Guid id)
         {
-            throw new NotImplementedException();
+            var tipoBuscado = await _context.TipoEvento.FindAsync(id);
+
+            if (tipoBuscado != null)
+            {
+                _context.TipoEvento.Remove(tipoBuscado);
+            }
+
+            await _context.SaveChangesAsync();
+
         }
 
-        public Task Cadastrar(object tipoEvento)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

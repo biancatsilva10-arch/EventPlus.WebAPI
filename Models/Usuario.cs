@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventPlus.WebAPI.Models;
@@ -24,5 +25,16 @@ public partial class Usuario
 
     [StringLength(60)]
     [Unicode(false)]
+    [JsonIgnore]
     public string Senha { get; set; } = null!;
+
+    [InverseProperty("IdUsuarioNavigation")]
+    public virtual ICollection<Comentario> Comentario { get; set; } = new List<Comentario>();
+
+    [ForeignKey("IdTipoUsuario")]
+    [InverseProperty("Usuario")]
+    public virtual TipoUsuario? IdTipoUsuarioNavigation { get; set; }
+
+    [InverseProperty("IdUsuarioNavigation")]
+    public virtual ICollection<Presenca> Presenca { get; set; } = new List<Presenca>();
 }

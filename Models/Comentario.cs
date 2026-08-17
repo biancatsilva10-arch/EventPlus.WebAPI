@@ -23,4 +23,11 @@ public partial class Comentario
     public DateTime DataComentario { get; set; }
 
     public bool Exibe { get; set; }
+
+
+    public Guid? IdUsuario { get; set; }
+
+    [ForeignKey("IdUsuario")]
+    [InverseProperty("Comentario")]
+    public virtual Usuario? IdUsuarioNavigation { get; set; }
 }
