@@ -32,57 +32,67 @@ public partial class EventContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=D20S20-1251879;Database=eventplus;User Id=sa;Password=Senai@134;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=D20S20-1251879;Database=EventPlus;User Id=sa;Password=Senai@134;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Comentario>(entity =>
         {
-            entity.HasKey(e => e.IdComentario).HasName("PK__Comentar__DDBEFBF95D361404");
-
             entity.Property(e => e.IdComentario).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.IdEventoNavigation).WithMany(p => p.Comentario).HasConstraintName("FK_Comentario_Evento");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Comentario)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Comentario_Usuario");
         });
 
         modelBuilder.Entity<Evento>(entity =>
         {
-            entity.HasKey(e => e.IdEvento).HasName("PK__Evento__034EFC04A7625AA8");
-
             entity.Property(e => e.IdEvento).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.IdInstituicaoNavigation).WithMany(p => p.Evento)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Evento_Instituicao");
+
+            entity.HasOne(d => d.IdTipoEventoNavigation).WithMany(p => p.Evento)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Evento_TipoEvento");
         });
 
         modelBuilder.Entity<Instituicao>(entity =>
         {
-            entity.HasKey(e => e.IdInstituicao).HasName("PK__Institui__8EA7AB002202F1A6");
-
             entity.Property(e => e.IdInstituicao).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Presenca>(entity =>
         {
-            entity.HasKey(e => e.IdPresenca).HasName("PK__Presenca__44CEA427EF17A871");
-
             entity.Property(e => e.IdPresenca).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.IdEventoNavigation).WithMany(p => p.Presenca).HasConstraintName("FK_Presenca_Evento");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Presenca)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Presenca_Usuario");
         });
 
         modelBuilder.Entity<TipoEvento>(entity =>
         {
-            entity.HasKey(e => e.IdTipoEvento).HasName("PK__TipoEven__09EED93A33EF67F8");
-
             entity.Property(e => e.IdTipoEvento).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<TipoUsuario>(entity =>
         {
-            entity.HasKey(e => e.IdTipoUsuario).HasName("PK__TipoUsua__03006BFF788F8BCD");
-
             entity.Property(e => e.IdTipoUsuario).HasDefaultValueSql("(newid())");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__5B65BF972194961C");
-
             entity.Property(e => e.IdUsuario).HasDefaultValueSql("(newid())");
+
+            entity.HasOne(d => d.IdTipoUsuarioNavigation).WithMany(p => p.Usuario)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Usuario_TipoUsuario");
         });
 
         OnModelCreatingPartial(modelBuilder);

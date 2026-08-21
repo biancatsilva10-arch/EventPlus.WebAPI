@@ -9,12 +9,19 @@ namespace EventPlus.WebAPI.Models;
 public partial class Presenca
 {
     [Key]
-    [Column("idPresenca")]
     public Guid IdPresenca { get; set; }
+
+    public bool Situacao { get; set; }
+
+    public Guid IdEvento { get; set; }
 
     public Guid? IdUsuario { get; set; }
 
-    public Guid? IdEvento { get; set; }
+    [ForeignKey("IdEvento")]
+    [InverseProperty("Presenca")]
+    public virtual Evento IdEventoNavigation { get; set; } = null!;
 
-    public bool Situacao { get; set; }
+    [ForeignKey("IdUsuario")]
+    [InverseProperty("Presenca")]
+    public virtual Usuario? IdUsuarioNavigation { get; set; }
 }

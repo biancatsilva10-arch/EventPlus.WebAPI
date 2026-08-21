@@ -11,21 +11,21 @@ public partial class Comentario
     [Key]
     public Guid IdComentario { get; set; }
 
-    public Guid? IdTipoUsuario { get; set; }
+    public DateTime DataComentario { get; set; }
 
-    public Guid? IdTipoEvento { get; set; }
-
-    [StringLength(250)]
+    [StringLength(200)]
     [Unicode(false)]
     public string Descricao { get; set; } = null!;
 
-    [Column(TypeName = "datetime")]
-    public DateTime DataComentario { get; set; }
-
     public bool Exibe { get; set; }
 
+    public Guid IdEvento { get; set; }
 
     public Guid? IdUsuario { get; set; }
+
+    [ForeignKey("IdEvento")]
+    [InverseProperty("Comentario")]
+    public virtual Evento IdEventoNavigation { get; set; } = null!;
 
     [ForeignKey("IdUsuario")]
     [InverseProperty("Comentario")]

@@ -11,8 +11,8 @@ namespace EventPlus.WebAPI.Controllers
     [ApiController]
     public class TipoEventoController : ControllerBase
     {
-        private readonly ITipoEvento _tipoEvento;
-        public TipoEventoController(ITipoEvento tipoEvento)
+        private readonly IInstiuicao _tipoEvento;
+        public TipoEventoController(IInstiuicao tipoEvento)
         {
             _tipoEvento = tipoEvento;
         }

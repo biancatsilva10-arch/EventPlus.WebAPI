@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventPlus.WebAPI.Repositories
 {
-    public class TipoEventoRepository : ITipoEvento
+    public class TipoEventoRepository : IInstiuicao
     {
         private readonly EventContext _context;
 
@@ -42,7 +42,7 @@ namespace EventPlus.WebAPI.Repositories
         }
 
 
-        Task<List<TipoEvento>> ITipoEvento.Listar()
+        Task<List<TipoEvento>> IInstiuicao.Listar()
         {
             return _context.TipoEvento.AsNoTracking().ToListAsync();
         }

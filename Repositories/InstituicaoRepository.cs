@@ -52,13 +52,14 @@ namespace EventPlus.WebAPI.Repositories
             throw new NotImplementedException();
         }
 
+        internal async Task Listar()
+        {
+            throw new NotImplementedException();
+        }
 
-
-
-
-
-
-
-
+        internal async Task BuscarPorId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

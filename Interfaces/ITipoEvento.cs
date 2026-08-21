@@ -8,7 +8,7 @@ namespace EventPlus.WebAPI.Interfaces
     /// Contrato tipoevento, metodos deverao ser implementados dentro do repositorio
     /// 
     /// </summary>
-    public interface ITipoEvento
+    public interface IInstiuicao
     {
         Task Cadastrar(TipoEvento tipoEvento);
 
